@@ -1,58 +1,35 @@
 import Head from "next/head";
+import styles from "@/styles/style.module.scss";
 import Header from "@/components/Header";
-import styles from "../styles/style.module.scss";
-import Timeline from "@/components/Timeline";
+import TimeLine from "@/components/Timeline";
 import Post from "@/components/Post";
-import Button from "@/components/Button";
+// import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 
-const dummyData: any = [
-  {
-    id: 1,
-    name: "山田 太郎",
-    date: "2024-02-01",
-    content: "今日はReactの勉強をしました！",
-  },
-  {
-    id: 2,
-    name: "佐藤 花子",
-    date: "2024-02-02",
-    content: "新しいプロジェクトが始まりました。",
-  },
-  {
-    id: 3,
-    name: "鈴木 一郎",
-    date: "2024-02-03",
-    content: "Next.jsのSSRを試しています。",
-  },
-  {
-    id: 4,
-    name: "田中 桃子",
-    date: "2024-02-04",
-    content: "UIデザインの改善を行いました。",
-  },
-  {
-    id: 5,
-    name: "中村 健",
-    date: "2024-02-05",
-    content: "TypeScriptの型安全性について学習中。",
-  },
+export interface PostProps {
+  id: string | number;
+  name: string;
+  date: string;
+  content: string;
+}
+
+// ダミーデータ
+const dummyData: PostProps[] = [
+  { id: 1, name: "山田 太郎", date: "2024-02-01", content: "今日はReactの勉強をしました！" },
+  { id: 2, name: "佐藤 花子", date: "2024-02-02", content: "新しいプロジェクトが始まりました。" },
+  { id: 3, name: "鈴木 一郎", date: "2024-02-03", content: "Next.jsのSSRを試しています。" },
+  { id: 4, name: "田中 桃子", date: "2024-02-04", content: "UIデザインの改善を行いました。" },
+  { id: 5, name: "中村 健", date: "2024-02-05", content: "TypeScriptの型安全性について学習中。" },
 ];
 
 export default function Home() {
-  // useStateを貼り付けてください:hugging:
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<PostProps[]>([]);
 
-  // useEffectの処理=画面が表示された直後に１度実行されます:hugging:
   useEffect(() => {
-    // ここに書く
-
     setPosts(dummyData);
-    console.log(11111111);
-    // ここの下消さない
+    console.log("useEffect");
   }, []);
 
-  // 追加
   console.log(posts, "データ");
 
   return (
@@ -63,25 +40,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
       <main className={styles.container}>
-        {/*  */}
-        {/* 先ほど作成したHeaderのパーツを呼び出す記述を書きます:hugging: */}
-        <Header />
+        <TimeLine />
+        {/* <Button label="Button" color="white" bg="black" /> */}
 
-        <Timeline />
-
-        {/* 後で消しますが先に表示の確認をしましょう:hugging: */}
-        {/* <Button textColor="pink" bg="blue" /> */}
-
-        {posts.map((item, index) => (
-          <Post
-            id={item.id}
-            name={item.name}
-            date={item.date}
-            content={item.content}
-          />
+        {posts.map((post: PostProps) => (
+          <Post key={post.id} id={post.id} name={post.name} date={post.date} content={post.content} />
         ))}
-        {/*  */}
+
+        {/* <Post name="haha" date="2025-01-01" content="TypeScriptの勉強中" /> */}
       </main>
     </>
   );

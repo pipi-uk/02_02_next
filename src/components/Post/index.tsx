@@ -1,25 +1,17 @@
-// rafceと入力後タブキーをおす🤗
+import React from "react";
+import styles from "./style.module.scss";
+import { PostProps } from "@/pages";
 
-import React from 'react'
-import styles from './style.module.scss'
-
-type PostProps ={
-  id:number;
-  name: string;
-  date: string;
-  content: string;
-}
-
-const Post: React.FC<PostProps> = ({ name, date ,content}) => {
+const Post: React.FC<PostProps> = ({ id, name, date, content }) => {
+  // const Post = ({ name, date, content }: PostProps) => {
   return (
-    <div className={styles.post}>
+    <div className={styles.post} key={id}>
+      <p>{id}</p>
       <p>{name}</p>
       <p>{date}</p>
       <p>{content}</p>
-      <p>登録されたデータを表示する予定</p>
-      <p className={styles.link}>リンクが入ります</p>
     </div>
-  )
-}
+  );
+};
 
 export default Post
